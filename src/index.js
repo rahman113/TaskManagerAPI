@@ -60,14 +60,14 @@ app.post('/upload', upload.single('upload'), (req,res) => {
 const Task = require('./models/tasks')
 const User = require('./models/user')
 
-const main = async () => {
+// const main = async () => {
 
 
-        //  const tasks = await Task.findById('6215cfac62011e270a11aca7')  
-        //  await tasks.populate('owner').execPopulate()
-        //  console.log(tasks.owner)
-        // const user = await User.findById('6217341c8a9bf81e46cc97d7')
-        // await user.populate('tasks').execPopulate()
-        // console.log(user.tasks)
-}
-main()
+//         //  const tasks = await Task.findById('6215cfac62011e270a11aca7')  
+//         //  await tasks.populate('owner').execPopulate()
+//         //  console.log(tasks.owner)
+//         // const user = await User.findById('6217341c8a9bf81e46cc97d7')
+//         // await user.populate('tasks').execPopulate()
+//         // console.log(user.tasks)
+// }
+// main()

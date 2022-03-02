@@ -3,7 +3,7 @@ const router = new express.Router()
 const Tasks = require("../models/tasks.js");
 const auth = require('../middleware/auth')
 
-router.post('/tasks', auth, async(req,res) =>
+router.post('/tasks',auth,async(req,res) =>
 { 
     //const tasks = new Tasks(req.body)
     const tasks = new Tasks({
@@ -12,8 +12,8 @@ router.post('/tasks', auth, async(req,res) =>
     })
     try{
 
-        const task = await tasks.save()
-        res.status(201).send(task)
+        await tasks.save()
+        res.status(201).send(tasks)
     }
     catch(e) {
         res.status(400).send(e)
