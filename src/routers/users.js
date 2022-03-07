@@ -35,7 +35,7 @@ router.post('/users/login', async(req, res) => {
             res.status(400).send()
    }
 })
-
+   // logout for a particular user
 router.post('/users/logout', auth, async(req, res) => {
 
     try {
@@ -51,6 +51,7 @@ router.post('/users/logout', auth, async(req, res) => {
     }
 
 })
+// Logout of all users!
 router.post('/users/logoutAll', auth, async(req, res) => {
 
     try {
@@ -66,11 +67,7 @@ router.post('/users/logoutAll', auth, async(req, res) => {
 })
 
 
-router.get('/users/me',auth, async(req, res) =>{ 
-    
-    const user = req.body
-    console.log(user)
-    res.send(req.user)
+router.get('/users/me',auth, async(req, res) =>{res.send(req.user)})
     
     // try {
 
@@ -80,7 +77,6 @@ router.get('/users/me',auth, async(req, res) =>{
     // catch(e){
     //     res.status(500).send(e)
     // }
-})
 const multer = require('multer');
 const upload = multer({
     limits: {
@@ -108,6 +104,7 @@ router.post('/users/me/avatar',auth, upload.single('avatar'), async(req,res) => 
   (error,req,res,next) => {
     res.status(400).send({error: error.message})
 })
+
 router.delete('/users/me/avatar',auth, async(req,res) => {
 
     req.user.avatar = undefined
@@ -129,7 +126,7 @@ router.get('/users/:id/avatar', async(req,res) => {
     }
 })
 
-
+// Fetching a particular user by their specific id!
 router.get('/users/:id', async(req, res) => {
 
     const _id = (req.params.id)

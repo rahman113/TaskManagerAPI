@@ -7,9 +7,9 @@ const Tasks = require('./tasks')
 
 const userSchema = new mongoose.Schema({
     name: {
-    type: String,
-    required: [true,"please provide a name"],
-    trim: true
+            type: String,
+            required: [true,"please provide a name"],
+            trim: true
     },
     email: {
               type: String,
@@ -25,10 +25,11 @@ const userSchema = new mongoose.Schema({
               }
     },
     age: {
-    type: Number,
-    required: [true,"please provide a Age"],
-    default: 0,
-    validate(value) 
+          type: Number,
+          required: [true,"please provide a Age"],
+          default: 0,
+
+         validate(value) 
     {
         if(value<0){
             throw new Error('age must be positive number', value);
@@ -64,8 +65,6 @@ const userSchema = new mongoose.Schema({
            type: Buffer
        }
 
-    
-
     },{
         timestamps: true
     })
@@ -88,7 +87,7 @@ const userSchema = new mongoose.Schema({
     userSchema.methods.generateAuthToken = async function()  {
          const user = this
          
-         const token =  jwt.sign( {_id: user._id.toString()}  , process.env.JWT_SECRET,{expiresIn: '7 days'})
+         const token =  jwt.sign( {_id: user._id.toString()}  , process.env.JWT_SECRET)
          const data = jwt.verify(token, process.env.JWT_SECRET)
          user.tokens = user.tokens.concat({token})
          await user.save()
