@@ -46,7 +46,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, "Please add a password"],
         trim: true,
-        minlength: [7, "Password should be 8 character long"],
+        minlength: [7, "Password should be atleast 8 character long"],
         validate(value)
         {
             if(value.toLowerCase().includes('password'))
