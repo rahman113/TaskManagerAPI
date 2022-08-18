@@ -1,7 +1,7 @@
 {
   "name": "task-manager",
   "version": "1.0.0",
-  "description": "",
+  "description": "TASK-MANAGER API",
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
@@ -9,7 +9,7 @@
     "test":"jest"
   },
   "keywords": [],
-  "author": "",
+  "author": "Ataur Rahman",
   "license": "ISC",
   "dependencies": {
     "@sendgrid/mail": "^7.6.1",
