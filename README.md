@@ -12,7 +12,7 @@ Setup instruction:
 To use this code you will require an account with SendGrid. Sign-up is free and no credit card is required to access a free-tier API Key.
 Node.js version 12+ and npm must be installed on your machine. In terminal type the following commands:
 
-git clone https://github.com/pgmorgan/task-manager-api.git
+https://github.com/rahman113/TaskManagerAPI.git
 cd task-manger-api
 sudo npm install
 mkdir config
@@ -22,10 +22,11 @@ vim dev.env
 Insert the following lines in dev.env, replacing all <content> with your own information:
 
 PORT=<port number>
-SGMAIL_EMAIL=<your email address>
 MONGODB_URL=<mongodb connection string>
 SENDGRID_API_KEY=<api key>
 JWT_SECRET=<unique key of your choice to generate JSON web tokens>
+
+
 To run the web server return to the root of the repository and type:
 
 npm run dev
