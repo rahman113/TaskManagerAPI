@@ -11,7 +11,6 @@ const sendWelcomeEmail = (email, name, address, age) => {
       text: `Welcome to the app, ${name}. Let me know you get along with the app. Your Age is ${age}, and your address is ${address}`,
     })
 }
-
 const sendCancellationEmail = (email, name) => {
 
   sgMail

@@ -2,7 +2,6 @@ const express = require('express');
 require("./db/mongoose.js");
 const userRouter = require('./routers/users');
 const taskRouter = require('./routers/tasks')
-
 const app = express()
 const port = process.env.PORT
 // app.use((req,res,next) => {
@@ -23,7 +22,6 @@ app.listen(port, () => {
 });
 
 // const jwt = require('jsonwebtoken');
-
 
 // const myFunction = async() =>{
 

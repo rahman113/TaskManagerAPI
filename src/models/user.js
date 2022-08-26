@@ -4,7 +4,6 @@ const validator = require('validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken')
 const Tasks = require('./tasks')
-
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
