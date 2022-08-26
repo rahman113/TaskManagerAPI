@@ -6,7 +6,7 @@ const sendWelcomeEmail = (email, name, address, age) => {
   sgMail
     .send({
       to: email,
-      from: 'ataurrahmanchaudhry03918@gmail.com',
+      from: 'amar123@gmail.com',
       subject: 'Sending with SendGrid is Fun',
       text: `Welcome to the app, ${name}. Let me know you get along with the app. Your Age is ${age}, and your address is ${address}`,
     })
@@ -17,7 +17,7 @@ const sendCancellationEmail = (email, name) => {
   sgMail
     .send({
       to: email,
-      from: 'ataurrahmanchaudhry03918@gmail.com',
+      from: 'ataurr123@gmail.com',
       subject: 'Sending with SendGrid is Fun',
       text: ` ${name} What is the reason behind cancellation of your email`
     })

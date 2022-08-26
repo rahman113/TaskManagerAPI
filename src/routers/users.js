@@ -20,6 +20,7 @@ router.post('/users', async (req, res) => {
         res.status(400).send(e)
     }
 })
+// login 
 router.post('/users/login', async (req, res) => {
     try {
         const user = await User.findByCredentials(req.body.email, req.body.password)
@@ -43,7 +44,7 @@ router.post('/users/logout', auth, async (req, res) => {
         res.send(user)
     }
     catch (e) {
-        res.status(500).send()
+        res.status(500).send(e.message)
     }
 
 })
@@ -57,15 +58,17 @@ router.post('/users/logoutAll', auth, async (req, res) => {
         res.send()
     }
     catch (e) {
-        res.status(500).send()
+        res.status(500).send(e)
     }
 
 })
+
+// Reading profile
 router.get('/users/me', auth, async (req, res) => { res.send(req.user) })
 
 
-const multer = require('multer')
-
+const multer = require('multer');
+const { appendFile } = require('fs');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -139,10 +142,9 @@ router.get('/users/:id/avatar', async (req, res) => {
         res.send(user.avatar)
     }
     catch (e) {
-        res.status(404).send
+        res.status(404).send(e.message)
     }
 })
-
 // Fetching a particular user by their specific id!
 router.get('/users/:id', async (req, res) => {
 
@@ -163,21 +165,21 @@ router.get('/users/:id', async (req, res) => {
 })
 router.patch('/users/me', auth, async (req, res) => {
     const updates = Object.keys(req.body)
-
     const allowedUpdates = ['name', 'age', 'address', 'email', 'password']
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
 
     if (!isValidOperation) {
-        return res.status(400).send({ error: 'Invalid updates!' })
+        return res.status(400).send({
+            success: false,
+            err: 'Invalid updates!'
+        })
 
     }
 
     try {
 
         updates.forEach((update) => req.user[update] = req.body[update])
-
         await req.user.save()
-
         res.send(req.user)
 
     }
@@ -185,6 +187,7 @@ router.patch('/users/me', auth, async (req, res) => {
         res.status(400).send(e)
     }
 })
+//  deleting a login user
 router.delete('/users/me', auth, async (req, res) => {
 
     try {

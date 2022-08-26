@@ -19,7 +19,7 @@ app.use(userRouter);
 app.use(taskRouter)
 app.use('/uploads', express.static('uploads'))
 app.listen(port, () => {
-        console.log("server is running on port", + port)
+        console.log(`Server is running on port:${port}`)
 });
 
 // const jwt = require('jsonwebtoken');
@@ -69,3 +69,4 @@ const User = require('./models/user')
 //         // console.log(user.tasks)
 // }
 // main()
+

@@ -2,7 +2,6 @@ const express = require('express');
 const router = new express.Router()
 const Tasks = require("../models/tasks.js");
 const auth = require('../middleware/auth')
-
 router.post('/tasks', auth, async (req, res) => {
     //const tasks = new Tasks(req.body)
     const tasks = new Tasks({
@@ -76,10 +75,10 @@ router.patch('/tasks/:id', auth, async (req, res) => {
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
 
     if (!isValidOperation) {
-        return res.status(400).send({ error: 'Invalid updates!' })
+        return res.status(400).json({ 
+            success: false,
+            error: 'Invalid updates!' })
     }
-
-
     try {
 
         const task = await Tasks.findOne({ _id: req.params.id, owner: req.user._id })

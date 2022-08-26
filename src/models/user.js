@@ -8,7 +8,7 @@ const Tasks = require('./tasks')
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: [true, "please provide a name"],
+        required: [true, "please provide a userName"],
         trim: true
     },
     email: {
@@ -27,7 +27,6 @@ const userSchema = new mongoose.Schema({
         type: Number,
         required: [true, "please provide a Age in Numbers only not acceptable in string"],
         default: 0,
-
         validate(value) {
             if (value < 0) {
                 throw new Error('age must be positive number', value);
@@ -43,7 +42,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, "Please add a password"],
         trim: true,
-        minlength: [7, "Password should be atleast 8 character long"],
+        minlength: [7, "Password should be atleast 7 character long"],
         validate(value) {
             if (value.toLowerCase().includes('password'))
                 throw Error('Password can not conatin "password"');
@@ -70,11 +69,10 @@ userSchema.virtual('tasks', {
 userSchema.methods.toJSON = function () {
     const user = this
     const userObject = user.toObject()
-    console.log(userObject)
     delete userObject.password
     delete userObject.tokens
     // delete userObject.avatar
-    return userObject
+    return userObject;
 }
 userSchema.methods.generateAuthToken = async function () {
     const user = this
@@ -109,6 +107,4 @@ userSchema.pre('remove', async function (next) {
     next()
 })
 const User = mongoose.model('User', userSchema)
-
-
 module.exports = User;              
