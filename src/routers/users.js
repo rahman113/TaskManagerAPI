@@ -6,8 +6,9 @@ const User = require("../models/user.js");
 const auth = require('../middleware/auth')
 const { sendWelcomeEmail, sendCancellationEmail } = require('../Emails/account')
 
+// Register a new user
 router.post('/users', async (req, res) => {
-
+    // creating the instance of User model
     const users = new User(req.body)
 
     try {
@@ -34,9 +35,7 @@ router.post('/users/login', async (req, res) => {
 })
 // logout for a particular user
 router.post('/users/logout', auth, async (req, res) => {
-
     try {
-
         req.user.tokens = req.user.tokens.filter((token) => {
             return token.token !== req.token
         })
@@ -67,6 +66,7 @@ router.post('/users/logoutAll', auth, async (req, res) => {
 router.get('/users/me', auth, async (req, res) => { res.send(req.user) })
 
 
+// File upload
 const multer = require('multer');
 const { appendFile } = require('fs');
 
@@ -105,6 +105,8 @@ const upload = multer({
 //         cb(undefined, true)
 // }    
 // })
+
+// Router for file upload
 router.post('/users/me/avatar', auth, upload.single('avatar'), async (req, res) => {
     // The Buffer type should
     // Be used when storing binary data, which is exactly the type of data that multer provides.
@@ -163,6 +165,7 @@ router.get('/users/:id', async (req, res) => {
         res.status(500).send(e);
     }
 })
+// updating user document
 router.patch('/users/me', auth, async (req, res) => {
     const updates = Object.keys(req.body)
     const allowedUpdates = ['name', 'age', 'address', 'email', 'password']
