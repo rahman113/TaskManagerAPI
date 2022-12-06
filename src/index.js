@@ -1,9 +1,10 @@
 const express = require('express');
 require("./db/mongoose.js");
-const userRouter = require('./routers/users');
-const taskRouter = require('./routers/tasks')
+const userRouter = require('./routers/usersRouter');
+const taskRouter = require('./routers/tasksRouter')
+
+
 const app = express()
-const port = process.env.PORT || 8000
 // app.use((req,res,next) => {
 //     if(req.method ==='GET'){
 //         res.status(503).send('GET request are disabled')
@@ -17,8 +18,11 @@ app.use(express.json());
 app.use(userRouter);
 app.use(taskRouter)
 app.use('/uploads', express.static('uploads'))
-app.listen(port, () => {
-        console.log(`Server is running on port:${port}`)
+
+//  set port for listening  a request
+const PORT = process.env.PORT || 8000
+app.listen(PORT, () => {
+        console.log(`Server is running on port:${PORT}`)
 });
 
 // const jwt = require('jsonwebtoken');
@@ -53,9 +57,8 @@ app.post('/upload', upload.single('upload'), (req, res) => {
         res.status(400).send({ error: error.message })
 })
 
-const Task = require('./models/tasks')
-const User = require('./models/user')
-
+const Task = require('./models/tasksModel')
+const User = require("./models/userModel")
 // const main = async () => {
 
 

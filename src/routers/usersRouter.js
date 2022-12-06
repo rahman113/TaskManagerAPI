@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path')
 const sharp = require('sharp')
 const router = new express.Router()
-const User = require("../models/user.js");
+const User = require("../models/userModel");
 const auth = require('../middleware/auth')
 const { sendWelcomeEmail, sendCancellationEmail } = require('../Emails/account')
 
@@ -10,7 +10,6 @@ const { sendWelcomeEmail, sendCancellationEmail } = require('../Emails/account')
 router.post('/users', async (req, res) => {
     // creating the instance of User model
     const users = new User(req.body)
-
     try {
         const user = await users.save()
         sendWelcomeEmail(user.email, user.name, user.address, user.age)
@@ -25,19 +24,20 @@ router.post('/users', async (req, res) => {
 router.post('/users/login', async (req, res) => {
     try {
         const user = await User.findByCredentials(req.body.email, req.body.password)
+        console.log("User", user)
         const token = await user.generateAuthToken()
         res.send({ user, token })
 
-    }
+    }   
     catch (e) {
-        res.status(400).send(e)
+        res.status(500).send(e.message)
     }
 })
 // logout for a particular user
-router.post('/users/logout', auth, async (req, res) => {
+router.post('/users/logout',auth, async (req, res) => {
     try {
         req.user.tokens = req.user.tokens.filter((token) => {
-            return token.token !== req.token
+            return token.token!== req.token
         })
         const user = await req.user.save()
         res.send(user)
@@ -63,7 +63,7 @@ router.post('/users/logoutAll', auth, async (req, res) => {
 })
 
 // Reading profile
-router.get('/users/me', auth, async (req, res) => { res.send(req.user) })
+router.get('/users/me',auth, async (req, res) => { res.send(req.user) })
 
 
 // File upload
@@ -127,7 +127,7 @@ router.post('/users/me/avatar', auth, upload.single('avatar'), async (req, res) 
         res.status(400).send({ error: error.message })
     })
 
-router.delete('/users/me/avatar', auth, async (req, res) => {
+router.delete('/users/me/avatar',auth, async (req, res) => {
 
     req.user.avatar = undefined
     await req.user.save()
@@ -166,7 +166,7 @@ router.get('/users/:id', async (req, res) => {
     }
 })
 // updating user document
-router.patch('/users/me', auth, async (req, res) => {
+router.patch('/users/me',auth, async (req, res) => {
     const updates = Object.keys(req.body)
     const allowedUpdates = ['name', 'age', 'address', 'email', 'password']
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
