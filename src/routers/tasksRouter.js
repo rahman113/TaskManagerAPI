@@ -18,21 +18,25 @@ router.post('/tasks', auth, async (req, res) => {
 
     }
 })
-// Get tasks?completed = true
-// Get tasks?limit = 10& skip = 0
-// Get task?sortBy=createdAt:desc
+// Get tasks?completed = true // filterin tasks
+// Get tasks?limit=10&skip=0 // pagination 
+// Get task?sortBy=createdAt:desc // sorting
 router.get('/tasks', auth, async (req, res) => {
     try {
 
-        const match = {}
-        const sort = {}
-
+        const match = {}  // for filtering
+        const sort = {} // for sorting // {createdAt:-1}
         if (req.query.sortBy) {
             const parts = req.query.sortBy.split(':')
+            console.log(parts); ["createdAt", "desc"]
+
             sort[parts[0]] = parts[1] === 'desc' ? -1 : 1
+            console.log(sort[parts[0]]); // -1
+
         }
         if (req.query.completed) {
             match.completed = req.query.completed === 'true'
+            console.log(match); // {completed: true}
         }
         await req.user.populate({
             path: 'tasks',
@@ -45,9 +49,11 @@ router.get('/tasks', auth, async (req, res) => {
             }
 
         }).execPopulate()
-        res.send(req.user.tasks)
+        res.status(200).send({"Tasks":req.user.tasks, count: req.user.tasks.length})
+        
     } catch (e) {
-        res.status(500).send()
+        console.log("Error: ", e.message);
+        res.status(500).send(e.message)
     }
 })
 router.get('/tasks/:id', auth, async (req, res) => {
@@ -64,8 +70,9 @@ router.get('/tasks/:id', auth, async (req, res) => {
         res.send(task)
     }
     catch (e) {
+        console.log("Error: ", e.message);
 
-        res.status(500).send()
+        res.status(500).send(e.message)
     }
 })
 router.patch('/tasks/:id', auth, async (req, res) => {
@@ -75,9 +82,10 @@ router.patch('/tasks/:id', auth, async (req, res) => {
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
 
     if (!isValidOperation) {
-        return res.status(400).json({ 
+        return res.status(400).json({
             success: false,
-            error: 'Invalid updates!' })
+            error: 'Invalid updates!'
+        })
     }
     try {
 
@@ -92,7 +100,9 @@ router.patch('/tasks/:id', auth, async (req, res) => {
         res.send(task)
     }
     catch (e) {
-        res.status(400).send(e)
+        console.log("Error: ", e.message);
+
+        res.status(400).send(e.message)
     }
 })
 
@@ -108,6 +118,8 @@ router.delete('/tasks/:id', auth, async (req, res) => {
         res.send(task)
     }
     catch (e) {
+        console.log("Error: ", e.message);
+
         res.status(500).send(e)
     }
 })
