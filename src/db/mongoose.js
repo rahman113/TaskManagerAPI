@@ -1,12 +1,11 @@
 
 const mongoose = require('mongoose')
-
 mongoose.connect(process.env.MONGODB_URL, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false
-}).then(con => {
-    console.log(`MongoDB dataBase has connected with HOST: ${con.connection.host}`)
+}).then(res => {
+    console.log(`MongoDB dataBase has connected with HOST: ${res.connection.host}`)
 }).catch(err => {
     console.log('Error', err.message)
 
@@ -15,7 +14,7 @@ mongoose.connect(process.env.MONGODB_URL, {
 //         description: {
 //         type: String,
 //         required: true,
-//         trim: true
+//         trim: trueco
 //         },
 //         completed : {
 //         type: Boolean,

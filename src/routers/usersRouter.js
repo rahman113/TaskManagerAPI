@@ -18,6 +18,7 @@ router.post('/users', async (req, res) => {
     }
     catch (e) {
         res.status(400).send(e)
+        console.log(e);
     }
 })
 // login 
@@ -69,6 +70,7 @@ router.get('/users/me',auth, async (req, res) => { res.send(req.user) })
 // File upload
 const multer = require('multer');
 const { appendFile } = require('fs');
+const { log } = require('console');
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
